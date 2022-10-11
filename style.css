@@ -4,8 +4,8 @@
 
 .notes {
   border: 1px solid gray;
-  background-color: purple;
-  color: white;
+  background-color: antiquewhite;
+  /*color: white;*/
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -20,10 +20,20 @@
   white-space: pre-wrap;
 }
 
+.non-editableText{
+  pointer-events: none;
+  height:200px;
+  white-space: pre-wrap;
+}
+
 .goal p {
   font-size: 1.25em;
 }
 
 .btnComplete, .btnDelete{
   float:right;
+}
+
+.non-editable{
+  pointer-events: none;
 }
