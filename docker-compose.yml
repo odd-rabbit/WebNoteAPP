@@ -38,7 +38,7 @@ services:
       - myphp
     volumes:
       - ./src:/var/www/html
-      - ./src/nginx.ini:/etc/nginx/conf.d
+      - ./src/nginx.ini:/etc/nginx/conf.d/default.conf
     networks:
       - mynet
   phpMyAdmin:
