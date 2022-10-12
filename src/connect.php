@@ -2,7 +2,7 @@
 $user = 'root';
 $password = 'root';
 $db = 'notes';
-$host = 'localhost';
+$host = 'mysql';
 //$port = 3306;
 
 $link = mysqli_init();
