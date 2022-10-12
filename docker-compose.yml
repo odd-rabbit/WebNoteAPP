@@ -4,7 +4,7 @@ version: "3.3"
 services:
   mysql:
     image: mysql:latest
-#    restart: always
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: notes
@@ -32,7 +32,7 @@ services:
       - mynet
   mynginx:
     image: nginx
-#    restart: always
+    restart: always
     ports:
       - "8080:80"
     depends_on:
