@@ -8,7 +8,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: notes
-      MYSQL_USER: root
     command:
       --init-file /data/application/init.sql
     volumes:
