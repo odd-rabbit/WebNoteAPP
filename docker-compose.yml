@@ -6,8 +6,11 @@ services:
     image: mysql:latest
     restart: always
     environment:
+      MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: notes
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     command:
       --init-file /data/application/init.sql
     volumes:
