@@ -21,7 +21,7 @@ services:
       - mynet
   myphp:
     image: php:7.4-fpm
-#    command: sh -c "docker-php-ext-install mysqli && docker-php-ext-enable mysqli && php-fpm"
+    command: sh -c "docker-php-ext-install mysqli && docker-php-ext-enable mysqli && php-fpm"
     restart: always
     volumes:
       - ./src:/var/www/html
