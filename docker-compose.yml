@@ -15,8 +15,8 @@ services:
 #      --init-file /data/application/init.sql
 #    volumes:
 #      - ./init.sql:/data/application/init.sql
-#    volumes:
-#      - ./init:/docker-entrypoint-initdb.d
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
     ports:
       - '3306:3306'
   myphp:
