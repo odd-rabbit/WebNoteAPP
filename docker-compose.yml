@@ -49,7 +49,7 @@ services:
     ports:
       - "8082:80"
     environment:
-      NGINX_HOST: mysql
+      NGINX_HOST: mydb
       NGINX_PORT: 3306
     networks:
       - mynet
