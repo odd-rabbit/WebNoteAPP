@@ -1,3 +1,4 @@
+session_start();
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -24,7 +25,7 @@
         </nav>
 <!--        sent message-->
         <?php
-        session_start();
+
         if(isset($_SESSION['note-key'])){
             echo "<div class='alert alert-success' role='alert' id='liveAlertBtn'>
             You have successfully created a note! Save the following key to ensure ownership of this note:
