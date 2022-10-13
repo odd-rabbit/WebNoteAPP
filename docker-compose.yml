@@ -11,10 +11,10 @@ services:
       MYSQL_DATABASE: notes
       MYSQL_USER: MYSQL_USER
       MYSQL_PASSWORD: MYSQL_PASSWORD
-#    command:
-#      --init-file /data/application/init.sql
-#    volumes:
-#      - ./init.sql:/data/application/init.sql
+    command:
+      --init-file /data/application/init.sql
+    volumes:
+      - ./init.sql:/data/application/init.sql
     ports:
       - '3306:3306'
     networks:
