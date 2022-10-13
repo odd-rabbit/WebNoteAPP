@@ -11,10 +11,6 @@ services:
       MYSQL_DATABASE: notes
       MYSQL_USER: MYSQL_USER
       MYSQL_PASSWORD: MYSQL_PASSWORD
-#    command:
-#      --init-file /data/application/init.sql
-#    volumes:
-#      - ./init.sql:/data/application/init.sql
     volumes:
       - ./init:/docker-entrypoint-initdb.d
     ports:
@@ -48,7 +44,5 @@ services:
     environment:
       PMA_HOST: mydb
       PMA_PORT: 3306
-#      NGINX_HOST: mydb
-#      NGINX_PORT: 3306
     depends_on:
       - mydb
