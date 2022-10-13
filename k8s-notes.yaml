@@ -1,0 +1,316 @@
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mydb
+      name: mydb
+    spec:
+      ports:
+        - name: "3306"
+          port: 3306
+          targetPort: 3306
+      selector:
+        io.kompose.service: mydb
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mynginx
+      name: mynginx
+    spec:
+      ports:
+        - name: "8080"
+          port: 8080
+          targetPort: 80
+      selector:
+        io.kompose.service: mynginx
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: myphp
+      name: myphp
+    spec:
+      ports:
+        - name: "9000"
+          port: 9000
+          targetPort: 9000
+      selector:
+        io.kompose.service: myphp
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: phpmyadmin
+      name: phpmyadmin
+    spec:
+      ports:
+        - name: "8082"
+          port: 8082
+          targetPort: 80
+      selector:
+        io.kompose.service: phpmyadmin
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mydb
+      name: mydb
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          io.kompose.service: mydb
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+            kompose.version: 1.26.1 (HEAD)
+          creationTimestamp: null
+          labels:
+            io.kompose.service: mydb
+        spec:
+          containers:
+            - env:
+                - name: MYSQL_DATABASE
+                  value: notes
+                - name: MYSQL_PASSWORD
+                  value: MYSQL_PASSWORD
+                - name: MYSQL_ROOT_PASSWORD
+                  value: root
+                - name: MYSQL_USER
+                  value: MYSQL_USER
+              image: mysql
+              name: mydb
+              ports:
+                - containerPort: 3306
+              resources: {}
+              volumeMounts:
+                - mountPath: /docker-entrypoint-initdb.d
+                  name: mydb-claim0
+          restartPolicy: Always
+          volumes:
+            - name: mydb-claim0
+              persistentVolumeClaim:
+                claimName: mydb-claim0
+    status: {}
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mydb-claim0
+      name: mydb-claim0
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mynginx
+      name: mynginx
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          io.kompose.service: mynginx
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+            kompose.version: 1.26.1 (HEAD)
+          creationTimestamp: null
+          labels:
+            io.kompose.service: mynginx
+        spec:
+          containers:
+            - image: nginx
+              name: mynginx
+              ports:
+                - containerPort: 80
+              resources: {}
+              volumeMounts:
+                - mountPath: /var/www/html
+                  name: mynginx-claim0
+                - mountPath: /etc/nginx/conf.d/default.conf
+                  name: mynginx-claim1
+          restartPolicy: Always
+          volumes:
+            - name: mynginx-claim0
+              persistentVolumeClaim:
+                claimName: mynginx-claim0
+            - name: mynginx-claim1
+              persistentVolumeClaim:
+                claimName: mynginx-claim1
+    status: {}
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mynginx-claim0
+      name: mynginx-claim0
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi
+    status: {}
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mynginx-claim1
+      name: mynginx-claim1
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: myphp
+      name: myphp
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          io.kompose.service: myphp
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+            kompose.version: 1.26.1 (HEAD)
+          creationTimestamp: null
+          labels:
+            io.kompose.service: myphp
+        spec:
+          containers:
+            - args:
+                - sh
+                - -c
+                - docker-php-ext-install mysqli && docker-php-ext-enable mysqli && php-fpm
+              image: php:7.4-fpm
+              name: myphp
+              ports:
+                - containerPort: 9000
+              resources: {}
+              volumeMounts:
+                - mountPath: /var/www/html
+                  name: myphp-claim0
+          restartPolicy: Always
+          volumes:
+            - name: myphp-claim0
+              persistentVolumeClaim:
+                claimName: myphp-claim0
+    status: {}
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: myphp-claim0
+      name: myphp-claim0
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: phpmyadmin
+      name: phpmyadmin
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          io.kompose.service: phpmyadmin
+      strategy: {}
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o k8s-notes.yaml
+            kompose.version: 1.26.1 (HEAD)
+          creationTimestamp: null
+          labels:
+            io.kompose.service: phpmyadmin
+        spec:
+          containers:
+            - env:
+                - name: PMA_HOST
+                  value: mydb
+                - name: PMA_PORT
+                  value: "3306"
+              image: phpmyadmin
+              name: phpmyadmin
+              ports:
+                - containerPort: 80
+              resources: {}
+          restartPolicy: Always
+    status: {}
+kind: List
+metadata: {}
+
