@@ -1,8 +1,8 @@
 <?php
-$user = 'root';
-$password = 'root';
+$user = 'MYSQL_USER';
+$password = 'MYSQL_PASSWORD';
 $db = 'notes';
-$host = 'mysql';
+$host = 'mydb';
 //$port = 3306;
 
 $link = mysqli_init();
