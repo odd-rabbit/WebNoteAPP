@@ -3,8 +3,7 @@ version: "3.3"
 
 services:
   mydb:
-    platform: linux/x86_64
-    image: mysql:8
+    image: mysql
     restart: always
     environment:
 #      MYSQL_ROOT_USER: root
